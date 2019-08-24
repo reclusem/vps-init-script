@@ -27,7 +27,7 @@ middleware_deploy()
 
 # change apt sources to Aliyun-Source
 read -t 30 -n9 -p "Would you want to change the apt sources to Aliyun-Source?(y/n) " result_for_choosing
-if [[ $result_for_choosing =~ y|Y ]]; then
+if [[ $result_for_choosing =~ y|Y && `cat /etc/apt/sources.list | grep aliyun` = '' ]]; then
     cp /etc/apt/sources.list /etc/apt/sources.list.bak
     cp $WORK_PATH/config/sources.list /etc/apt/
 fi
@@ -45,7 +45,9 @@ fi
 apt install -y language-pack-zh-hans
 
 # modify system timezone
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+if [[ ! `timedatectl | grep "Time zone"` =~ 'Asia/Shanghai' ]]; then
+    timedatectl set-timezone Asia/Shanghai
+fi
 
 # check BBR and enabled it
 result_for_bbr_in_kernel=`sysctl net.ipv4.tcp_available_congestion_control | grep bbr`
@@ -59,7 +61,7 @@ if [[ "$result_for_bbr_in_mod" = '' ]]; then
 fi
 
 # install base software
-apt install -y vim tmux git wget
+apt install -y git vim tmux wget htop
 
 # install some tools for compiling and installing from source code
 apt install -y build-essential libtool autoconf
@@ -76,3 +78,6 @@ middleware_deploy Nginx nginx-deploy
 
 # deploy PHP
 middleware_deploy PHP php-deploy
+
+# deploy MySQL
+middleware_deploy MySQL mysql-deploy
