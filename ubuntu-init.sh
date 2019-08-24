@@ -81,3 +81,6 @@ middleware_deploy PHP php-deploy
 
 # deploy MySQL
 middleware_deploy MySQL mysql-deploy
+
+# deploy shadowsocks-libev
+middleware_deploy shadowsocks-libev shadowsocks-libev-debian
