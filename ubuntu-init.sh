@@ -14,10 +14,10 @@ WORK_PATH=`pwd`
 # [param2] middleware deploy script file name
 middleware_deploy()
 {
-    read -t 30 -n9 -p "Would you want to deploy ${1}?(y/n) " result_for_choosing
+    read -t 60 -n9 -p "Would you want to deploy ${1}?(y/n) " result_for_choosing
     if [[ $result_for_choosing =~ y|Y ]]; then
         DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/middleware/${2}.sh
-        chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
+        chmod +x $DEPLOY_SCRIPT_FILE_NAME && . $DEPLOY_SCRIPT_FILE_NAME
     fi
 }
 
@@ -26,7 +26,7 @@ middleware_deploy()
 #
 
 # change apt sources to Aliyun-Source
-read -t 30 -n9 -p "Would you want to change the apt sources to Aliyun-Source?(y/n) " result_for_choosing
+read -t 60 -n9 -p "Would you want to change the apt sources to Aliyun-Source?(y/n) " result_for_choosing
 if [[ $result_for_choosing =~ y|Y && `cat /etc/apt/sources.list | grep aliyun` = '' ]]; then
     cp /etc/apt/sources.list /etc/apt/sources.list.bak
     cp $WORK_PATH/config/sources.list /etc/apt/
@@ -36,7 +36,7 @@ fi
 apt update
 
 # upgrade local softwares
-read -t 30 -n9 -p "Would you want to upgrade local softwares?(y/n) " result_for_choosing
+read -t 60 -n9 -p "Would you want to upgrade local softwares?(y/n) " result_for_choosing
 if [[ $result_for_choosing =~ y|Y ]]; then
     apt upgrade -y
 fi
@@ -83,4 +83,8 @@ middleware_deploy PHP php-deploy
 middleware_deploy MySQL mysql-deploy
 
 # deploy shadowsocks-libev
-middleware_deploy shadowsocks-libev shadowsocks-libev-debian
+read -t 60 -n9 -p "Would you want to deploy shadowsocks-libev?(y/n) " result_for_choosing
+if [[ $result_for_choosing =~ y|Y ]]; then
+    DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/middleware/shadowsocks-libev-debian.sh
+    chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
+fi
