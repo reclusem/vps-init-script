@@ -17,7 +17,7 @@ middleware_deploy()
     read -t 30 -n9 -p "Would you want to deploy ${1}?(y/n) " result_for_choosing
     if [[ $result_for_choosing =~ y|Y ]]; then
         DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/middleware/${2}.sh
-        chmod +x $DEPLOY_SCRIPT_FILE_NAME && . $DEPLOY_SCRIPT_FILE_NAME
+        chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
     fi
 }
 
