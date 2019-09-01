@@ -82,6 +82,9 @@ middleware_deploy PHP php-deploy
 # deploy MySQL
 middleware_deploy MySQL mysql-deploy
 
+# deploy Redis
+middleware_deploy Redis redis-deploy
+
 # deploy shadowsocks-libev
 read -t 60 -n9 -p "Would you want to deploy shadowsocks-libev?(y/n) " result_for_choosing
 if [[ $result_for_choosing =~ y|Y ]]; then
