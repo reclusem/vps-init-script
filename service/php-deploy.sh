@@ -41,7 +41,7 @@ if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
     mkdir -p $PHP_INSTALL_PREFIX/lib/php.d
     cp $PHP_INSTALL_PREFIX/etc/php-fpm.conf.default $PHP_INSTALL_PREFIX/etc/php-fpm.conf
     cp $PHP_INSTALL_PREFIX/etc/php-fpm.d/www.conf.default $PHP_INSTALL_PREFIX/etc/php-fpm.d/www.conf
-    php-fpm
+    service php-fpm start
 else
     echo 'ERROR: softwares path is not exist, STOP deploying PHP.'
 fi

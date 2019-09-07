@@ -25,7 +25,7 @@ if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
     make && make install
     cp $WORK_PATH/config/nginx /etc/init.d/ && chmod +x /etc/init.d/nginx
     update-rc.d nginx defaults
-    nginx
+    service nginx start
 else
     echo 'ERROR: softwares path is not exist, STOP deploying Nginx.'
 fi

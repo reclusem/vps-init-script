@@ -9,14 +9,14 @@ WORK_PATH=`pwd`
 # FUNCTION
 #
 
-# Usage: middleware_deploy [param1] [param2]
-# [param1] middleware name label
-# [param2] middleware deploy script file name
-middleware_deploy()
+# Usage: service_deploy [param1] [param2]
+# [param1] service name label
+# [param2] service deploy script file name
+service_deploy()
 {
     read -t 60 -n9 -p "Would you want to deploy ${1}?(y/n) " result_for_choosing
     if [[ $result_for_choosing =~ y|Y ]]; then
-        DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/middleware/${2}.sh
+        DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/service/${2}.sh
         chmod +x $DEPLOY_SCRIPT_FILE_NAME && . $DEPLOY_SCRIPT_FILE_NAME
     fi
 }
@@ -74,20 +74,20 @@ mkdir -p $SOFTWARES_PATH
 #
 
 # deploy Nginx
-middleware_deploy Nginx nginx-deploy
+service_deploy Nginx nginx-deploy
 
 # deploy PHP
-middleware_deploy PHP php-deploy
+service_deploy PHP php-deploy
 
 # deploy MySQL
-middleware_deploy MySQL mysql-deploy
+service_deploy MySQL mysql-deploy
 
 # deploy Redis
-middleware_deploy Redis redis-deploy
+service_deploy Redis redis-deploy
 
 # deploy shadowsocks-libev
 read -t 60 -n9 -p "Would you want to deploy shadowsocks-libev?(y/n) " result_for_choosing
 if [[ $result_for_choosing =~ y|Y ]]; then
-    DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/middleware/shadowsocks-libev-debian.sh
+    DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/service/shadowsocks-libev-debian.sh
     chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
 fi
