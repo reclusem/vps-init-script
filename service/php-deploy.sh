@@ -1,15 +1,12 @@
 #!/bin/bash
 
-PHP_FILE_NAME=php-7.2.20
+PHP_FILE_NAME=php-7.2.33
 PHP_TAR_PACKAGE_FILE_NAME=$PHP_FILE_NAME.tar.gz
-WWW_USER_NAME=www-data
 PHP_INSTALL_PREFIX=/usr/local/php
 
 # install and deploy
 if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
-    if !(id $WWW_USER_NAME &> /dev/null); then
-        adduser --system --group --no-create-home --disabled-login --disabled-password $WWW_USER_NAME
-    fi
+    add_www_user
     apt install -y libxml2-dev libssl-dev libcurl4-gnutls-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
     cd $SOFTWARES_PATH
     wget https://www.php.net/distributions/$PHP_TAR_PACKAGE_FILE_NAME

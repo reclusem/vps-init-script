@@ -1,15 +1,12 @@
 #!/bin/bash
 
-NGINX_FILE_NAME=nginx-1.17.1
+NGINX_FILE_NAME=nginx-1.18.0
 NGINX_TAR_PACKAGE_FILE_NAME=$NGINX_FILE_NAME.tar.gz
-WWW_USER_NAME=www-data
 NGINX_INSTALL_PREFIX=/usr/local/nginx
 
 # install and deploy
 if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
-    if !(id $WWW_USER_NAME &> /dev/null); then
-        adduser --system --group --no-create-home --disabled-login --disabled-password $WWW_USER_NAME
-    fi
+    add_www_user
     apt install -y libpcre3-dev zlib1g-dev openssl libssl-dev
     cd $SOFTWARES_PATH
     wget http://nginx.org/download/$NGINX_TAR_PACKAGE_FILE_NAME

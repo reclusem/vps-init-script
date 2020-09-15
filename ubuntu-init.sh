@@ -2,8 +2,9 @@
 
 # Ubuntu Version: 18.04
 
-SOFTWARES_PATH=/data/softwares
-WORK_PATH=`pwd`
+export SOFTWARES_PATH=/data/softwares
+export WORK_PATH=`pwd`
+export WWW_USER_NAME=www-data
 
 #
 # FUNCTION
@@ -17,9 +18,18 @@ service_deploy()
     read -t 60 -n9 -p "Would you want to deploy ${1}?(y/n) " result_for_choosing
     if [[ $result_for_choosing =~ y|Y ]]; then
         DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/service/${2}.sh
-        chmod +x $DEPLOY_SCRIPT_FILE_NAME && . $DEPLOY_SCRIPT_FILE_NAME
+        chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
     fi
 }
+
+# add new user named www
+add_www_user()
+{
+    if !(id $WWW_USER_NAME &> /dev/null); then
+        adduser --system --group --no-create-home --disabled-login --disabled-password $WWW_USER_NAME
+    fi
+}
+export -f add_www_user
 
 #
 # BASIC
@@ -86,8 +96,4 @@ service_deploy MySQL mysql-deploy
 service_deploy Redis redis-deploy
 
 # deploy shadowsocks-libev
-read -t 60 -n9 -p "Would you want to deploy shadowsocks-libev?(y/n) " result_for_choosing
-if [[ $result_for_choosing =~ y|Y ]]; then
-    DEPLOY_SCRIPT_FILE_NAME=$WORK_PATH/service/shadowsocks-libev-debian.sh
-    chmod +x $DEPLOY_SCRIPT_FILE_NAME && $DEPLOY_SCRIPT_FILE_NAME
-fi
+service_deploy shadowsocks-libev shadowsocks-libev-debian
