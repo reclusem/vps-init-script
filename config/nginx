@@ -10,7 +10,7 @@
 # Description:       starts nginx using start-stop-daemon
 ### END INIT INFO
 
-DAEMON=/usr/sbin/nginx
+DAEMON=/usr/local/sbin/nginx
 PID=/usr/local/nginx/logs/nginx.pid
 NAME=nginx
 DESC=nginx

@@ -16,7 +16,7 @@ if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
         --prefix=$NGINX_INSTALL_PREFIX \
         --user=www-data \
         --group=www-data \
-        --sbin-path=/usr/sbin/nginx \
+        --sbin-path=/usr/local/sbin/nginx \
         --with-http_gzip_static_module \
         --with-http_ssl_module
     make && make install
