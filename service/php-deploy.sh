@@ -7,7 +7,7 @@ PHP_INSTALL_PREFIX=/usr/local/php
 # install and deploy
 if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
     add_www_user
-    apt install -y libxml2-dev libssl-dev libcurl4-gnutls-dev libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
+    apt install -y libxml2-dev libssl-dev libcurl4-gnutls-dev libzip-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
     cd $SOFTWARES_PATH
     wget https://www.php.net/distributions/$PHP_TAR_PACKAGE_FILE_NAME
     tar zxf $PHP_TAR_PACKAGE_FILE_NAME
@@ -25,8 +25,10 @@ if [[ $SOFTWARES_PATH != '' && -e $SOFTWARES_PATH ]]; then
         --with-pdo-mysql=mysqlnd \
         --with-openssl \
         --with-curl \
+        --enable-bcmath \
         --enable-mbstring \
         --enable-zip \
+        --with-zlib \
         --with-gd \
         --with-png-dir \
         --with-jpeg-dir \
